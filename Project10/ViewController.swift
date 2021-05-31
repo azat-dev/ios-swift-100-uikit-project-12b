@@ -12,7 +12,7 @@ func getDocumentsDirectory() -> URL {
     return paths[0]
 }
 
-class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     var people = [Person]()
     
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -79,6 +79,45 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         cell.layer.cornerRadius = 7
         
         return cell
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.selectAll(nil)
+        textField.becomeFirstResponder()
+    }
+    
+    func showNameEditAlert(index: Int) {
+        let person = people[index]
+        
+        let alert = UIAlertController(
+            title: "Rename person",
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        alert.addTextField()
+        alert.textFields?.first?.text = person.name
+        alert.textFields?.first?.delegate = self
+        
+        let submitButton = UIAlertAction(title: "Ok", style: .default) {
+            [weak self, weak alert] _ in
+            
+            guard let newName = alert?.textFields?.first?.text else {
+                return
+            }
+            
+            person.name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+            self?.collectionView.reloadItems(at: [.init(item: index, section: 0)])
+        }
+        
+        alert.addAction(submitButton)
+        alert.addAction(.init(title: "Cancel", style: .cancel))
+        
+        present(alert, animated: true)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        showNameEditAlert(index: indexPath.item)
     }
 }
 
