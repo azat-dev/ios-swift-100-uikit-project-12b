@@ -13,6 +13,7 @@
 		AA1E4DAD2664B0A60070AA47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA1E4DAB2664B0A60070AA47 /* Main.storyboard */; };
 		AA1E4DAF2664B0A60070AA47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA1E4DAE2664B0A60070AA47 /* Assets.xcassets */; };
 		AA1E4DB22664B0A60070AA47 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA1E4DB02664B0A60070AA47 /* LaunchScreen.storyboard */; };
+		AA9FD0812665601B00FD64A8 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FD0802665601B00FD64A8 /* Person.swift */; };
 		AAC081562664B88200ED951A /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC081552664B88200ED951A /* PersonCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		AA1E4DAE2664B0A60070AA47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA1E4DB12664B0A60070AA47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA1E4DB32664B0A60070AA47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA9FD0802665601B00FD64A8 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		AAC081552664B88200ED951A /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +65,7 @@
 				AA1E4DA92664B0A60070AA47 /* ViewController.swift */,
 				AA1E4DAB2664B0A60070AA47 /* Main.storyboard */,
 				AAC081552664B88200ED951A /* PersonCell.swift */,
+				AA9FD0802665601B00FD64A8 /* Person.swift */,
 				AA1E4DAE2664B0A60070AA47 /* Assets.xcassets */,
 				AA1E4DB02664B0A60070AA47 /* LaunchScreen.storyboard */,
 				AA1E4DB32664B0A60070AA47 /* Info.plist */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA9FD0812665601B00FD64A8 /* Person.swift in Sources */,
 				AA1E4DAA2664B0A60070AA47 /* ViewController.swift in Sources */,
 				AA1E4DA62664B0A60070AA47 /* AppDelegate.swift in Sources */,
 				AAC081562664B88200ED951A /* PersonCell.swift in Sources */,
