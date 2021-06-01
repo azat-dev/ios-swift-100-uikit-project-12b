@@ -44,7 +44,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
         present(picker, animated: true)
     }
-
+    
     private func initNavBar() {
         navigationItem.leftBarButtonItem = .init(
             barButtonSystemItem: .add,
@@ -55,13 +55,15 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Names to faces"
+        navigationController?.navigationBar.prefersLargeTitles = true
         initNavBar()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return people.count
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {
             fatalError("Unable to dequeue PersonCell")
@@ -69,7 +71,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
         let person = people[indexPath.item]
         cell.name.text = person.name
-
+        
         let file = getDocumentsDirectory().appendingPathComponent(person.image)
         cell.imageView.image = UIImage(contentsOfFile: file.path)
         
@@ -116,8 +118,39 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         present(alert, animated: true)
     }
     
+    func deleteItem(index: Int) {
+        people.remove(at: index)
+        
+        collectionView.deleteItems(at: [
+            .init(item: index, section: 0)
+        ])
+    }
+    
+    func showChooseAlert(itemIndex: Int) {
+        let alert = UIAlertController(
+            title: "Choose",
+            message: "Do you want to delete or rename?",
+            preferredStyle: .actionSheet
+        )
+        
+        let renameButton = UIAlertAction(title: "Rename", style: .default) {
+            [weak self] _ in
+            self?.showNameEditAlert(index: itemIndex)
+        }
+        
+        let deleteButton = UIAlertAction(title: "Delete", style: .destructive) {
+            [weak self] _ in
+            self?.deleteItem(index: itemIndex)
+        }
+        
+        alert.addAction(renameButton)
+        alert.addAction(deleteButton)
+        alert.addAction(.init(title: "Cancel", style: .cancel))
+        
+        present(alert, animated: true)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showNameEditAlert(index: indexPath.item)
+        showChooseAlert(itemIndex: indexPath.item)
     }
 }
-
