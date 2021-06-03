@@ -15,6 +15,30 @@ func getDocumentsDirectory() -> URL {
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     var people = [Person]()
     
+    func save() {
+        let encoder = JSONEncoder()
+        
+        guard let data = try? encoder.encode(people) else {
+            return
+        }
+        
+        UserDefaults.standard.setValue(data, forKey: "people")
+    }
+    
+    func loadData() {
+        let decoder = JSONDecoder()
+        
+        guard let jsonData = UserDefaults.standard.object(forKey: "people") as? Data else {
+            return
+        }
+        
+        guard let savedPeople = try? decoder.decode([Person].self, from: jsonData) else {
+            return
+        }
+        
+        people = savedPeople
+    }
+    
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else {
             return
@@ -35,6 +59,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         collectionView.insertItems(at: [index])
         
         collectionView.reloadData()
+        save()
     }
     
     @objc func addButtonTapped() {
@@ -58,6 +83,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         title = "Names to faces"
         navigationController?.navigationBar.prefersLargeTitles = true
         initNavBar()
+        loadData()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -110,6 +136,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             
             person.name = newName.trimmingCharacters(in: .whitespacesAndNewlines)
             self?.collectionView.reloadItems(at: [.init(item: index, section: 0)])
+            self?.save()
         }
         
         alert.addAction(submitButton)
@@ -124,6 +151,8 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         collectionView.deleteItems(at: [
             .init(item: index, section: 0)
         ])
+        
+        save()
     }
     
     func showChooseAlert(itemIndex: Int) {
